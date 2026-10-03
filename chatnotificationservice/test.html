@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+</head>
+<body>
+<h3>Chat test</h3>
+<div id="log" style="white-space:pre-wrap;border:1px solid #ccc;padding:8px;height:300px;overflow:auto"></div>
+<button onclick="sendMessage()">Gửi tin thử</button>
+
+<script>
+    const log = (msg) => document.getElementById('log').textContent += msg + "\n";
+
+    const client = new StompJs.Client({
+      brokerURL: 'ws://localhost:8083/ws',
+      onConnect: () => {
+        log('Connected');
+        client.subscribe('/topic/conversations/1', (message) => {
+          log('New message: ' + message.body);
+        });
+        client.subscribe('/topic/warehouse/10', (message) => {
+          log('Warehouse inbox update: ' + message.body);
+        });
+      }
+    });
+    client.activate();
+
+    function sendMessage() {
+      client.publish({
+        destination: '/app/chat.send',
+        body: JSON.stringify({
+          conversationId: 1,
+          senderId: 1,
+          senderType: 'MEMBER',
+          senderName: 'Tai Nguyen',
+          messageType: 'TEXT',
+          content: 'Test realtime ' + new Date().toLocaleTimeString()
+        })
+      });
+    }
+</script>
+</body>
+</html>
