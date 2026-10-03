@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: auth-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/auth/**,/api/users/**
+
+            - id: marketplace-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/marketplace/**
+
+            - id: chat-notification-service
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/chat/**,/api/notifications/**
+
+            - id: ai-tryon-service
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/tryon/**
+
+            - id: audit-log-service
+              uri: http://localhost:8085
+              predicates:
+                - Path=/api/audit-logs/**
