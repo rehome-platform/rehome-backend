@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+</head>
+<body>
+<h3>Notification test</h3>
+<div id="log" style="white-space:pre-wrap;border:1px solid #ccc;padding:8px;height:300px;overflow:auto"></div>
+
+<script>
+    const log = (msg) => document.getElementById('log').textContent += msg + "\n";
+
+    const client = new StompJs.Client({
+      brokerURL: 'ws://localhost:8083/ws',
+      onConnect: () => {
+        log('Connected, dang lang nghe notification cua MEMBER id=1...');
+        client.subscribe('/topic/notifications/MEMBER/1', (message) => {
+          log('New notification: ' + message.body);
+        });
+      }
+    });
+    client.activate();
+</script>
+</body>
+</html>
