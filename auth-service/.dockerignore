@@ -1,0 +1,6 @@
+target/
+.git/
+.idea/
+.vscode/
+config/mail-local.yml
+*.log
