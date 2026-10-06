@@ -1,10 +1,10 @@
-package com.rehome.chatnotificationservice;
+package com.example.audit_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChatnotificationserviceApplicationTests {
+class AuditServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

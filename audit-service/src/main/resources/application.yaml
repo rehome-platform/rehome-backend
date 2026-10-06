@@ -1,0 +1,29 @@
+server:
+  port: 8081   # khac cong voi project PRM chinh (8080) de chay song song
+
+spring:
+  application:
+    name: audit-service
+
+  # ── Database rieng cho service nay ──
+  datasource:
+    url: ${AUDIT_DB_URL:jdbc:postgresql://localhost:5432/audit_log_db}
+    username: ${AUDIT_DB_USERNAME:postgres}
+    password: ${AUDIT_DB_PASSWORD:12345}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # tu tao bang lan dau, doi thanh 'validate' khi da on dinh
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+internal:
+  api:
+    key: ${INTERNAL_API_KEY}
+
+# Cho phep FE (mo file HTML truc tiep, khong qua server) goi API
+cors:
+  allowed-origins: "*"
